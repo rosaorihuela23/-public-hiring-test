@@ -4,6 +4,7 @@ import CreateFactorModal from "@/components/CreateFactorModal";
 import DataTable, { ColumnConfig } from "@/components/DataTable";
 import { CarbonEmissionFactor } from "@/types/carbon-emission-factor";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
 // Column configuration
 
@@ -45,13 +46,14 @@ export default function Home() {
   const [filteredFactors, setFilteredFactors] = useState<
     CarbonEmissionFactor[]
   >([]);
+  const router = useRouter();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [showForm, setShowForm] = useState(false);
   const [creating, setCreating] = useState(false);
   const [sortField, setSortField] = useState<keyof CarbonEmissionFactor | null>(
-    null
+    null,
   );
   const [sortDirection, setSortDirection] = useState<"asc" | "desc">("asc");
 
@@ -99,7 +101,7 @@ export default function Home() {
         (factor) =>
           factor.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
           factor.unit.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          factor.source.toLowerCase().includes(searchQuery.toLowerCase())
+          factor.source.toLowerCase().includes(searchQuery.toLowerCase()),
       );
     }
 
@@ -192,6 +194,24 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-gray-50 p-6">
       <div className="max-w-6xl mx-auto">
+        <div className="mb-6 border-b border-gray-200 pb-3">
+          <div className="flex flex-wrap gap-4">
+            <button
+              type="button"
+              onClick={() => router.push("/calculate")}
+              className="cursor-pointer px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+            >
+              Calculate Carbon Footprint
+            </button>
+            <button
+              type="button"
+              onClick={() => router.push("/compare")}
+              className="cursor-pointer px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+            >
+              Compare Products' Carbon Footprint
+            </button>
+          </div>
+        </div>
         {/* Header */}
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-gray-900 mb-2">
