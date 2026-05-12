@@ -1,4 +1,3 @@
-import { GreenlyDataSource, dataSource } from "../../config/dataSource";
 import { getTestEmissionFactor } from "../seed-dev-data";
 import { CarbonEmissionFactor } from "./carbonEmissionFactor.entity";
 import { CarbonEmissionFactorsService } from "./carbonEmissionFactors.service";
